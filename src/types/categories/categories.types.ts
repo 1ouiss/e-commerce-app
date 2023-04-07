@@ -8,3 +8,8 @@ export type Categorie = {
 };
 
 export type Categories = Categorie[];
+
+export type CategorieCreate = {
+  title: string;
+  description: string;
+};

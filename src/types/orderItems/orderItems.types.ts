@@ -9,3 +9,8 @@ export type OrderItem = {
 };
 
 export type OrderItems = OrderItem[];
+
+export type OrderItemCreate = {
+  quantity: number;
+  product: Product;
+};

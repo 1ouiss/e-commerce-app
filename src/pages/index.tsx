@@ -2,8 +2,53 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import ProductService from "@/services/product.service";
 import { Product, Products } from "@/types/products/products.types";
+import { useContext, useEffect } from "react";
+import TokenService from "@/services/token.service";
+import { UserContext } from "@/context/UserContext";
+import UserService from "@/services/user.service";
+import { Order } from "@/types/orders/orders.types";
+import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
+import CategoryService from "@/services/categories.service";
+import { Categories } from "@/types/categories/categories.types";
 
-export default function Home({ products }: { products: Products }) {
+export default function Home({
+  products,
+  categories,
+}: {
+  products: Products;
+  categories: Categories;
+}) {
+  const { setToken, token, setOrder } = useContext(UserContext);
+
+  useEffect(() => {
+    const tokenLocal: any = TokenService.getUserFromLocalToken();
+    if (tokenLocal) {
+      console.log("token", tokenLocal);
+      setToken(tokenLocal);
+    }
+  }, []);
+
+  const getOrderInUser = async () => {
+    if (token) {
+      console.log("token", token);
+      const user = await UserService.getOneUser(token.id);
+      if (user) {
+        console.log("user", user);
+        const orderActive = user.orders.find(
+          (order: Order) => order.status === "pending"
+        );
+        if (orderActive) {
+          setOrder(orderActive);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getOrderInUser();
+  }, [token]);
+
   return (
     <>
       <Head>
@@ -13,13 +58,25 @@ export default function Home({ products }: { products: Products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {products.map((product) => (
-          <div key={product.id}>
-            <h2>{product.title}</h2>
-            <p>{product.description}</p>
-            <p>{product.price}</p>
-          </div>
-        ))}
+        <h5>Les 3 derniers produits</h5>
+        <div className="d-flex justify-content-around">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+        <button>Voir tous les produits</button>
+        <h5>Les 3 dernières catégories</h5>
+        <div className="d-flex justify-content-around">
+          {categories.map((categorie) => (
+            <div key={categorie.id}>
+              <p>{categorie.title}</p>
+              <p>{categorie.description}</p>
+              <Link href={`/categories/${categorie.id}`}>
+                Voir le détail de la catégorie
+              </Link>
+            </div>
+          ))}
+        </div>
       </main>
     </>
   );
@@ -27,10 +84,12 @@ export default function Home({ products }: { products: Products }) {
 
 export const getStaticProps = async () => {
   const products = await ProductService.getLastProducts();
+  const categories = await CategoryService.getAllCategories();
 
   return {
     props: {
       products: products,
+      categories: categories,
       revalidate: 60,
     },
   };

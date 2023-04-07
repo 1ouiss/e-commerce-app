@@ -1,5 +1,6 @@
 import ProductService from "@/services/product.service";
 import { Products } from "@/types/products/products.types";
+import Link from "next/link";
 
 const Products = ({ products }: { products: Products }) => {
   const addToCart = (id: number) => {
@@ -9,20 +10,22 @@ const Products = ({ products }: { products: Products }) => {
     <section>
       <h1>Products</h1>
       {products.map((product) => (
-        <div key={product.id}>
-          <h2>{product.title}</h2>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => {
-              console.log(product.id);
-            }}
-          >
-            AddToCart
-          </button>
-        </div>
+        <Link
+          href={{
+            pathname: "/products/[id]",
+            query: { id: product.id },
+          }}
+          style={{
+            textDecoration: "none",
+            color: "black",
+          }}
+        >
+          <div key={product.id}>
+            <h2>{product.title}</h2>
+            <p>{product.description}</p>
+            <p>{product.price}</p>
+          </div>
+        </Link>
       ))}
     </section>
   );

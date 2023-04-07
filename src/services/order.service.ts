@@ -1,4 +1,4 @@
-import { Order, Orders } from "@/types/orders/orders.types";
+import { Order, OrderCreate, Orders } from "@/types/orders/orders.types";
 import instance from "./api.service";
 
 const endPoint = "/orders";
@@ -13,7 +13,7 @@ const getOrderById = async (id: number): Promise<Order> => {
   return order.data;
 };
 
-const createOrder = async (order: Order): Promise<Order> => {
+const createOrder = async (order: OrderCreate): Promise<Order> => {
   const newOrder = await instance.post(endPoint, order);
   return newOrder.data;
 };
@@ -28,11 +28,17 @@ const addNewItemToOrder = async ({ id, item }: { id: number; item: any }) => {
   }
 };
 
+const updateOrder = async (id: number, order: Order) => {
+  const updatedOrder = await instance.put(`${endPoint}/${id}`, order);
+  return updatedOrder.data;
+};
+
 const OrderService = {
   getAllOrders,
   getOrderById,
   createOrder,
   addNewItemToOrder,
+  updateOrder,
 };
 
 export default OrderService;

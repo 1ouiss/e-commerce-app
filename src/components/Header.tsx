@@ -1,30 +1,9 @@
 import { UserContext } from "@/context/UserContext";
-import OrderService from "@/services/order.service";
-import { Order } from "@/types/orders/orders.types";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 const Header = () => {
-  const [order, setOrder] = useState<Order | null>(null);
-  const [orderId, setOrderId] = useState<number | null>(null);
-
-  const getOrder = async (id: number) => {
-    const order = await OrderService.getOrderById(id);
-    setOrder(order);
-  };
-
-  useEffect(() => {
-    if (orderId) {
-      getOrder(orderId);
-    }
-  }, [orderId]);
-
-  const { token } = useContext(UserContext);
-
-  useEffect(() => {
-    if (token) {
-    }
-  }, []);
+  const { order } = useContext(UserContext);
 
   return (
     <header>
