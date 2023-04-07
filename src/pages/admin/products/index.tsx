@@ -36,6 +36,14 @@ const ProductPageAdmin = ({ products }: { products: Products }) => {
               >
                 Supprimer le produit
               </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  router.push(`/admin/products/${product.id}`);
+                }}
+              >
+                Modifier le produit
+              </button>
             </div>
           </div>
         ))}
