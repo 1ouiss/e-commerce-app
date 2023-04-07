@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <div className="card" style={{ width: "18rem" }}>
+    <div className="card m-3" style={{ width: "18rem" }}>
       <img src="https://placehold.co/400" className="card-img-top" alt="..." />
       <div className="card-body">
         <h5 className="card-title">{product.title}</h5>

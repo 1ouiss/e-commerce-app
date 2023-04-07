@@ -1,3 +1,4 @@
+import ProductCard from "@/components/ProductCard";
 import CategoryService from "@/services/categories.service";
 import { Categorie } from "@/types/categories/categories.types";
 
@@ -21,11 +22,7 @@ const DetailCategorie = ({ categorie }: { categorie: Categorie }) => {
       </button>
       <div>
         {categorie.products.map((product) => (
-          <div key={product.id}>
-            <p>{product.title}</p>
-            <p>{product.description}</p>
-            <p>{product.price}</p>
-          </div>
+          <ProductCard product={product} key={product.id} />
         ))}
       </div>
     </div>

@@ -1,21 +1,20 @@
+import ProductCard from "@/components/ProductCard";
 import CategoryService from "@/services/categories.service";
 import { Categorie } from "@/types/categories/categories.types";
 
 const CategoryDetail = ({ category }: { category: Categorie }) => {
   return (
     <div>
-      <h1>Category Detail</h1>
-      <h2>{category.title}</h2>
+      <div className="d-flex flex-column w-100 align-items-center mb-5">
+        <h2>{category.title}</h2>
 
-      <p>{category.description}</p>
-
-      {category.products.map((product) => (
-        <div key={product.id}>
-          <h3>{product.title}</h3>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-        </div>
-      ))}
+        <p>{category.description}</p>
+      </div>
+      <div className="d-flex justify-content-center align-items-center flex-wrap">
+        {category.products.map((product) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,23 +1,34 @@
+import OrderList from "@/components/OrderList";
 import OrderService from "@/services/order.service";
 import { Orders } from "@/types/orders/orders.types";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const AdminPage = ({ orders }: { orders: Orders }) => {
+  const router = useRouter();
   return (
     <div>
       <h1>Admin Page</h1>
       <div>
-        <Link href="/admin/products">Voir les produits</Link>
-        <Link href="/admin/categories">Voir les catégories</Link>
+        <button
+          type="button"
+          className="btn btn-outline-primary m-5"
+          onClick={() => router.push("/admin/products")}
+        >
+          Voir les produits
+        </button>
+        <button
+          type="button"
+          className="btn btn-outline-primary m-5"
+          onClick={() => router.push("/admin/categories")}
+        >
+          Voir les catégories
+        </button>
       </div>
-      {orders.map((order) => (
-        <div key={order.id}>
-          <p>{order.id}</p>
-          <p>{order.status}</p>
-          <p>{order.amount}</p>
-          <p>{order.user.username}</p>
-        </div>
-      ))}
+      <div>
+        <h2>Les commandes</h2>
+        <OrderList orders={orders} />
+      </div>
     </div>
   );
 };

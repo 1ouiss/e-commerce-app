@@ -20,7 +20,9 @@ const Header = () => {
           >
             <i className="bi bi-cart"></i>
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {order && order.orderItems.length}
+              {order && order.orderItems.length > 0
+                ? order.orderItems.length
+                : 0}
               <span className="visually-hidden">unread messages</span>
             </span>
           </button>

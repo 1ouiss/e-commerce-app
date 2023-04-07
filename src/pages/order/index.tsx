@@ -1,16 +1,17 @@
 import { UserContext } from "@/context/UserContext";
 import OrderService from "@/services/order.service";
 import { OrderItem } from "@/types/orderItems/orderItems.types";
-import { Order } from "@/types/orders/orders.types";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 
 const Cart = () => {
-  const { order, setOrder, token } = useContext(UserContext);
+  const { order, setOrder } = useContext(UserContext);
 
+  const router = useRouter();
   return (
     <section>
-      <h1>Cart</h1>
-      {order && (
+      <h1>Panier</h1>
+      {order ? (
         <div>
           <p>{order.id}</p>
           <p>{order.status}</p>
@@ -25,7 +26,24 @@ const Cart = () => {
               </p>
             </div>
           ))}
+
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={async () => {
+              const orderUpdated = await OrderService.updateOrder(order.id, {
+                ...order,
+                status: "paid",
+              });
+              setOrder(orderUpdated);
+              router.push("/order/validate");
+            }}
+          >
+            Valider
+          </button>
         </div>
+      ) : (
+        <p>Pas de panier</p>
       )}
     </section>
   );

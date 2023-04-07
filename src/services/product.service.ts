@@ -34,12 +34,18 @@ const updateProduct = async (product: Product): Promise<Product> => {
   return productDb.data;
 };
 
+const deleteProduct = async (id: number): Promise<Product> => {
+  const product = await instance.delete(`${endPoint}/${id}`);
+  return product.data;
+};
+
 const ProductService = {
   getAllProducts,
   createProduct,
   getLastProducts,
   getProductById,
   updateProduct,
+  deleteProduct,
 };
 
 export default ProductService;

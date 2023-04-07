@@ -11,6 +11,8 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import CategoryService from "@/services/categories.service";
 import { Categories } from "@/types/categories/categories.types";
+import { useRouter } from "next/router";
+import CategoryCard from "@/components/CategoryCard";
 
 export default function Home({
   products,
@@ -19,6 +21,7 @@ export default function Home({
   products: Products;
   categories: Categories;
 }) {
+  const router = useRouter();
   const { setToken, token, setOrder } = useContext(UserContext);
 
   useEffect(() => {
@@ -58,25 +61,33 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h5>Les 3 derniers produits</h5>
-        <div className="d-flex justify-content-around">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-        <button>Voir tous les produits</button>
-        <h5>Les 3 dernières catégories</h5>
-        <div className="d-flex justify-content-around">
-          {categories.map((categorie) => (
-            <div key={categorie.id}>
-              <p>{categorie.title}</p>
-              <p>{categorie.description}</p>
-              <Link href={`/categories/${categorie.id}`}>
-                Voir le détail de la catégorie
-              </Link>
-            </div>
-          ))}
-        </div>
+        <section>
+          <h5>Les 3 derniers produits</h5>
+          <div className="d-flex justify-content-around">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className="d-flex justify-content-center mt-5">
+            <button
+              className="btn btn-primary m-auto"
+              onClick={() => {
+                router.push("/products");
+              }}
+            >
+              Voir tous les produits
+            </button>
+          </div>
+        </section>
+
+        <section>
+          <h5>Les 3 dernières catégories</h5>
+          <div className="d-flex justify-content-around">
+            {categories.slice(0, 3).map((categorie) => (
+              <CategoryCard key={categorie.id} category={categorie} />
+            ))}
+          </div>
+        </section>
       </main>
     </>
   );
