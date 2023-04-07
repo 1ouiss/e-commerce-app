@@ -6,6 +6,7 @@ import { Product } from "@/types/products/products.types";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { OrderItem } from "@/types/orderItems/orderItems.types";
+import { Params } from "@/types/params/params.types";
 
 const Product = ({ product }: { product: Product }) => {
   const { order, setOrder, token } = useContext(UserContext);
@@ -117,7 +118,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: { params: any }) => {
+export const getStaticProps = async ({ params }: { params: Params }) => {
   const product = await ProductService.getProductById(params.id);
   return {
     props: {

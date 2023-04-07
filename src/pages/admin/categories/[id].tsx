@@ -1,6 +1,7 @@
 import ProductCard from "@/components/ProductCard";
 import CategoryService from "@/services/categories.service";
 import { Categorie } from "@/types/categories/categories.types";
+import { Params } from "@/types/params/params.types";
 
 const DetailCategorie = ({ categorie }: { categorie: Categorie }) => {
   return (
@@ -35,7 +36,7 @@ export const getStaticPaths = async () => {
   const categories = await CategoryService.getAllCategories();
 
   const paths = categories.map((categorie) => ({
-    params: { id: categorie.id.toString() },
+    params: { id: categorie.id },
   }));
 
   return {
@@ -44,7 +45,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: { params: any }) => {
+export const getStaticProps = async ({ params }: { params: Params }) => {
   const categorie = await CategoryService.getCategory(params.id);
 
   return {

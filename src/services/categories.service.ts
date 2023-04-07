@@ -11,7 +11,7 @@ const getAllCategories = async (): Promise<Categories> => {
   return categories.data;
 };
 
-const getCategory = async (id: string): Promise<Categories> => {
+const getCategory = async (id: number): Promise<Categories> => {
   const category = await instance.get(`${endPoint}/${id}`);
   return category.data;
 };

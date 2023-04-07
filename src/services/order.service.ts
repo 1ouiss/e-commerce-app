@@ -1,5 +1,6 @@
 import { Order, OrderCreate, Orders } from "@/types/orders/orders.types";
 import instance from "./api.service";
+import { OrderItem } from "@/types/orderItems/orderItems.types";
 
 const endPoint = "/orders";
 
@@ -18,7 +19,13 @@ const createOrder = async (order: OrderCreate): Promise<Order> => {
   return newOrder.data;
 };
 
-const addNewItemToOrder = async ({ id, item }: { id: number; item: any }) => {
+const addNewItemToOrder = async ({
+  id,
+  item,
+}: {
+  id: number;
+  item: OrderItem;
+}) => {
   if (!id) {
     const order = await instance.post(`${endPoint}/${id}/items`, item);
     return order.data;

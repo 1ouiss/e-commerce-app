@@ -1,6 +1,7 @@
 import ProductCard from "@/components/ProductCard";
 import CategoryService from "@/services/categories.service";
 import { Categorie } from "@/types/categories/categories.types";
+import { Params } from "@/types/params/params.types";
 
 const CategoryDetail = ({ category }: { category: Categorie }) => {
   return (
@@ -10,7 +11,7 @@ const CategoryDetail = ({ category }: { category: Categorie }) => {
 
         <p>{category.description}</p>
       </div>
-      <div className="d-flex justify-content-center align-items-center flex-wrap">
+      <div className="d-flex justify-content-center align-items-center ">
         {category.products.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))}
@@ -24,7 +25,7 @@ export default CategoryDetail;
 export const getStaticPaths = async () => {
   const categories = await CategoryService.getAllCategories();
   const paths = categories.map((categorie) => ({
-    params: { id: categorie.id.toString() },
+    params: { id: categorie.id },
   }));
   return {
     paths,
@@ -32,7 +33,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: { params: any }) => {
+export const getStaticProps = async ({ params }: { params: Params }) => {
   const category = await CategoryService.getCategory(params.id);
   return {
     props: {

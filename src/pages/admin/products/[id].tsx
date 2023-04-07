@@ -1,6 +1,7 @@
 import CategoryService from "@/services/categories.service";
 import ProductService from "@/services/product.service";
 import { Categories } from "@/types/categories/categories.types";
+import { Params } from "@/types/params/params.types";
 import { Product } from "@/types/products/products.types";
 import { useEffect, useState } from "react";
 
@@ -138,7 +139,7 @@ export const getStaticPaths = async () => {
   return { paths, fallback: true };
 };
 
-export const getStaticProps = async ({ params }: { params: any }) => {
+export const getStaticProps = async ({ params }: { params: Params }) => {
   const product = await ProductService.getProductById(params.id);
   console.log(product);
 
