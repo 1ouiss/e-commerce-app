@@ -7,7 +7,9 @@ const Header = () => {
 
   return (
     <header>
-      <h1>Louis Shop</h1>
+      <div className="logo">
+        <img src="../logo-e-commerce.jpeg" alt="" />
+      </div>
       <nav>
         <Link href="/">Acceuil</Link>
         <Link href="/categories">Catégories</Link>
