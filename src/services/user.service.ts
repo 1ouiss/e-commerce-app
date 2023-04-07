@@ -3,10 +3,15 @@ import instance from "./api.service";
 const endPoint = "/users";
 
 const getOneUser = async (id: number) => {
-  const user = await instance.get(`${endPoint}/${id}`);
-  console.log(user.data);
+  try {
+    const user = await instance.get(`${endPoint}/${id}`);
 
-  return user.data;
+    return user.data;
+  } catch (error: any) {
+    if (error.response.status === 400) {
+      window.location.reload();
+    }
+  }
 };
 
 const getAllUsers = async () => {

@@ -87,6 +87,14 @@ export default function Home({
               <CategoryCard key={categorie.id} category={categorie} />
             ))}
           </div>
+          <button
+            className="btn btn-primary m-auto"
+            onClick={() => {
+              router.push("/categories");
+            }}
+          >
+            Voir toutes les catégories
+          </button>
         </section>
       </main>
     </>
